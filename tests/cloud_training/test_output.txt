@@ -11,68 +11,11 @@ tests/cloud_training/test_cloud_data.py::TestCloudData::test_cloud_data_create_t
 tests/cloud_training/test_main.py::TestMain::test_route_preprocess PASSED [ 44%]
 tests/cloud_training/test_main.py::TestMain::test_route_train[local] PASSED [ 55%]
 tests/cloud_training/test_main.py::TestMain::test_route_train[gcs] PASSED [ 66%]
-tests/cloud_training/test_main.py::TestMain::test_route_evaluate FAILED  [ 77%]
+tests/cloud_training/test_main.py::TestMain::test_route_evaluate PASSED  [ 77%]
 tests/cloud_training/test_main.py::TestMain::test_route_pred PASSED      [ 88%]
 tests/cloud_training/test_vm.py::test_i_am_a_vm FAILED                   [100%]
 
 =================================== FAILURES ===================================
-_________________________ TestMain.test_route_evaluate _________________________
-
-self = <tests.cloud_training.test_main.TestMain object at 0x7fd5de0c06a0>
-
-    @patch("taxifare.params.MODEL_TARGET", new='local')
-    def test_route_evaluate(self):
-        from taxifare.interface.main import evaluate
-    
->       mae = evaluate(min_date=MIN_DATE, max_date=MAX_DATE)
-
-tests/cloud_training/test_main.py:107: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-taxifare/interface/main.py:179: in evaluate
-    data_processed = get_data_with_cache(
-taxifare/ml_logic/data.py:63: in get_data_with_cache
-    df.to_csv(cache_path, header=data_has_header, index=False)
-../../../.pyenv/versions/3.10.6/envs/taxifare-env/lib/python3.10/site-packages/pandas/util/_decorators.py:211: in wrapper
-    return func(*args, **kwargs)
-../../../.pyenv/versions/3.10.6/envs/taxifare-env/lib/python3.10/site-packages/pandas/core/generic.py:3720: in to_csv
-    return DataFrameRenderer(formatter).to_csv(
-../../../.pyenv/versions/3.10.6/envs/taxifare-env/lib/python3.10/site-packages/pandas/util/_decorators.py:211: in wrapper
-    return func(*args, **kwargs)
-../../../.pyenv/versions/3.10.6/envs/taxifare-env/lib/python3.10/site-packages/pandas/io/formats/format.py:1189: in to_csv
-    csv_formatter.save()
-../../../.pyenv/versions/3.10.6/envs/taxifare-env/lib/python3.10/site-packages/pandas/io/formats/csvs.py:241: in save
-    with get_handle(
-../../../.pyenv/versions/3.10.6/envs/taxifare-env/lib/python3.10/site-packages/pandas/io/common.py:734: in get_handle
-    check_parent_directory(str(handle))
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
-
-path = '/home/eren/.lewagon/mlops/data/prcessed/processed_2009-01-01_2015-01-01_1k.csv'
-
-    def check_parent_directory(path: Path | str) -> None:
-        """
-        Check if parent directory of a file exists, raise OSError if it does not
-    
-        Parameters
-        ----------
-        path: Path or str
-            Path to check parent directory of
-        """
-        parent = Path(path).parent
-        if not parent.is_dir():
->           raise OSError(rf"Cannot save file into a non-existent directory: '{parent}'")
-E           OSError: Cannot save file into a non-existent directory: '/home/eren/.lewagon/mlops/data/prcessed'
-
-../../../.pyenv/versions/3.10.6/envs/taxifare-env/lib/python3.10/site-packages/pandas/io/common.py:597: OSError
------------------------------ Captured stdout call -----------------------------
-[35m
-⭐️ Use case: evaluate[0m
-[34m
-Load latest model from local registry...[0m
-[34m
-Load latest model from disk...[0m
-✅ Model loaded from local disk
-[34m
-Load data from BigQuery server...[0m
 ________________________________ test_i_am_a_vm ________________________________
 
     def test_i_am_a_vm():
@@ -81,13 +24,12 @@ ________________________________ test_i_am_a_vm ________________________________
         """
     
 >       assert platform.node() == INSTANCE, f"You should be running from your instance named '{INSTANCE}'."
-E       AssertionError: You should be running from your instance named 'taxi-instance'.
-E       assert 'LAPTOP-4VAA7LQ7' == 'taxi-instance'
-E         - taxi-instance
+E       AssertionError: You should be running from your instance named 'eren-vm1'.
+E       assert 'LAPTOP-4VAA7LQ7' == 'eren-vm1'
+E         - eren-vm1
 E         + LAPTOP-4VAA7LQ7
 
 tests/cloud_training/test_vm.py:9: AssertionError
 =========================== short test summary info ============================
-FAILED tests/cloud_training/test_main.py::TestMain::test_route_evaluate - OSE...
 FAILED tests/cloud_training/test_vm.py::test_i_am_a_vm - AssertionError: You ...
-================== 2 failed, 7 passed, 18 warnings in 27.07s ===================
+================== 1 failed, 8 passed, 18 warnings in 25.37s ===================
