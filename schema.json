@@ -1,0 +1,5 @@
+[
+  {"name": "column1", "type": "STRING"},
+  {"name": "column2", "type": "INTEGER"},
+  ...
+]
